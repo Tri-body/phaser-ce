@@ -557,6 +557,20 @@ module.exports = function (grunt) {
 
     });
 
+    grunt.registerTask('nophysics-split', 'Phaser without physics, tilemaps or particles', function() {
+
+        grunt.option('exclude', 'arcade,ninja,p2,tilemaps,particles,creature,weapon');
+        grunt.option('filename', 'phaser-no-physics-split');
+        grunt.option('sourcemap', true);
+        grunt.option('copy', true);
+        grunt.option('copycustom', true);
+        grunt.option('uglify', true);
+        grunt.option('split', true);
+
+        grunt.task.run('custom');
+
+    });
+
     grunt.registerTask('minimum', 'Phaser without any optional modules', function() {
 
         grunt.option('exclude', 'gamepad,keyboard,bitmapdata,graphics,rendertexture,text,bitmaptext,retrofont,net,tweens,sound,debug,arcade,ninja,p2,tilemaps,particles,creature,video,rope,tilesprite,weapon');
