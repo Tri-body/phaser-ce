@@ -839,8 +839,9 @@ Phaser.Cache.prototype = {
 
         var sound = this.getSound(key);
 
-        if (sound)
-        {
+        if (sound && !sound.reloading)
+        {   
+            sound.reloading = true
             sound.data.src = sound.url;
 
             sound.data.addEventListener('canplaythrough', function () {
@@ -864,6 +865,7 @@ Phaser.Cache.prototype = {
 
         if (sound)
         {
+            sound.reloading = false;
             sound.locked = false;
             this.onSoundUnlock.dispatch(key);
         }
@@ -932,11 +934,11 @@ Phaser.Cache.prototype = {
     */
     isSoundReady: function (key) {
 
-        var sound = this.getItem(key, Phaser.Cache.SOUND, 'isSoundDecoded');
+        var sound = this.getItem(key, Phaser.Cache.SOUND, 'isSoundReady');
 
         if (sound)
         {
-            return (sound.decoded && !this.game.sound.touchLocked);
+            return (!sound.reloading && sound.decoded && !this.game.sound.touchLocked);
         }
 
     },
