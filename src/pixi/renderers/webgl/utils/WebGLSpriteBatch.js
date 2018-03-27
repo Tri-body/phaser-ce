@@ -581,7 +581,10 @@ PIXI.WebGLSpriteBatch.prototype.flush = function () {
         gl.vertexAttribPointer(shader.colorAttribute, 4, gl.UNSIGNED_BYTE, true, stride, 16);
 
         // Texture index
-        gl.vertexAttribPointer(shader.aTextureIndex, 1, gl.FLOAT, false, stride, 20);
+        // Workaround for <https://github.com/photonstorm/phaser-ce/issues/194>
+        if (shader.aTextureIndex > -1) {
+            gl.vertexAttribPointer(shader.aTextureIndex, 1, gl.FLOAT, false, stride, 20);
+        }
     }
 
     // upload the verts to the buffer
