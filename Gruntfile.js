@@ -411,6 +411,7 @@ module.exports = function (grunt) {
         grunt.task.run('full');
         grunt.task.run('arcadephysics');
         grunt.task.run('nophysics');
+        grunt.task.run('nophysics-split');
         grunt.task.run('minimum');
         grunt.task.run('split');
 
@@ -422,6 +423,7 @@ module.exports = function (grunt) {
         grunt.task.run('full');
         grunt.task.run('arcadephysics');
         grunt.task.run('nophysics');
+        grunt.task.run('nophysics-split');
         grunt.task.run('minimum');
         grunt.task.run('split');
         grunt.task.run('creature');

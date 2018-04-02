@@ -199,7 +199,11 @@ Phaser.Sound = function (game, key, volume, loop, connect) {
     */
     this._removeFromSoundManager = false;
 
-
+    /**
+     * @property {number} _initTime - for audio tag init time, special for android 4.4 issue.
+     * @private
+     */
+    this._initTime = 0;
 
     if (this.usingWebAudio)
     {
@@ -529,7 +533,23 @@ Phaser.Sound.prototype = {
                 }
                 else
                 {
-                    if (this.loop)
+                    // try to fix android 4.4 webview sound.duration is 0 issue
+                    if (this.totalDuration === 0 && this.currentTime < 4000 && this._sound) 
+                    {
+                        if(this._sound.duration > 0)
+                        {
+                            this.totalDuration = this._sound.duration;
+                            this._initTime = this.currentTime / 1000;
+                            if (this.duration === 0)
+                            {
+                                this.duration = this.totalDuration + this._initTime;
+                                this.durationMS = this.duration * 1000;
+                            }
+                            this.stopTime = this.startTime + this.durationMS ;
+                            this.currentTime = 0;
+                        }
+                    }
+                    else if (this.loop)
                     {
                         this.onLoop.dispatch(this);
 
@@ -773,8 +793,8 @@ Phaser.Sound.prototype = {
 
                     if (this.duration === 0)
                     {
-                        this.duration = this.totalDuration;
-                        this.durationMS = this.totalDuration * 1000;
+                        this.duration = this.totalDuration + this._initTime;
+                        this.durationMS = this.duration * 1000;
                     }
 
                     this._sound.currentTime = this.position;
@@ -1134,7 +1154,7 @@ Phaser.Sound.prototype = {
         this._markedToDelete = true;
         this._removeFromSoundManager = remove;
         this.stop();
-
+        this._initTime = 0;
         if (remove)
         {
             this.game.sound.remove(this);
