@@ -851,7 +851,17 @@ Phaser.Game.prototype = {
 
         if (this.config['canvasStyle'])
         {
-            this.canvas.style = this.config['canvasStyle'];
+            if(typeof this.config['canvasStyle'] === 'string'){
+                var styleStrs  = this.config['canvasStyle'].split(';')
+                var style
+                for(var i = styleStrs.length - 1; i >= 0; i--){
+                    style = styleStrs[i].split(':')
+                    if(style.length === 2){
+                        this.canvas.style[style[0]] = style[1]
+                    }
+                }
+            }
+            // this.canvas.style = this.config['canvasStyle'];
         }
         else
         {
