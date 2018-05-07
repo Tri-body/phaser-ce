@@ -72,7 +72,7 @@ Phaser.Text = function (game, x, y, text, style) {
 
     /**
     * Specify a padding value which is added to the line width and height when calculating the Text size.
-    * ALlows you to add extra spacing if Phaser is unable to accurately determine the true font dimensions.
+    * Allows you to add extra spacing if Phaser is unable to accurately determine the true font dimensions.
     * @property {Phaser.Point} padding
     */
     this.padding = new Phaser.Point();
@@ -150,6 +150,12 @@ Phaser.Text = function (game, x, y, text, style) {
     * @property {string} characterLimitSuffix
     */
     this.characterLimitSuffix = '';
+
+    /** The text to use to measure the font width and height.
+    * @property {string} _testString
+    * @private
+    */
+    this._testString = '|MÉq';
 
     /**
      * @property {number} _res - Internal canvas resolution var.
@@ -1296,7 +1302,14 @@ Phaser.Text.prototype.setText = function (text, immediate) {
 
     if (immediate === undefined) { immediate = false; }
 
-    this.text = text.toString() || '';
+    text = text.toString() || '';
+
+    if (text === this._text)
+    {
+        return this;
+    }
+
+    this.text = text;
 
     if (immediate)
     {
@@ -1547,6 +1560,7 @@ Phaser.Text.prototype._renderCanvas = function (renderSession) {
 Phaser.Text.prototype.determineFontProperties = function (fontStyle) {
 
     var properties = Phaser.Text.fontPropertiesCache[fontStyle];
+    var measureText = this.testString || '|MÉq';
 
     if (!properties)
     {
@@ -1557,8 +1571,8 @@ Phaser.Text.prototype.determineFontProperties = function (fontStyle) {
 
         context.font = fontStyle;
 
-        var width = Math.ceil(context.measureText('|MÉq').width);
-        var baseline = Math.ceil(context.measureText('|MÉq').width);
+        var width = Math.ceil(context.measureText(measureText).width);
+        var baseline = Math.ceil(context.measureText(measureText).width);
         var height = 2 * baseline;
 
         baseline = baseline * 1.4 | 0;
@@ -1573,7 +1587,7 @@ Phaser.Text.prototype.determineFontProperties = function (fontStyle) {
 
         context.textBaseline = 'alphabetic';
         context.fillStyle = '#000';
-        context.fillText('|MÉq', 0, baseline);
+        context.fillText(measureText, 0, baseline);
 
         if (!context.getImageData(0, 0, width, height))
         {
@@ -2334,6 +2348,28 @@ Object.defineProperty(Phaser.Text.prototype, 'height', {
     }
 
 });
+
+/**
+* The text used to measure the font's width and height
+* @name Phaser.Text#testString
+* @default '|MÉq'
+*/
+Object.defineProperty(Phaser.Text.prototype, 'testString', {
+
+    get: function() {
+
+        return this._testString;
+
+    },
+
+    set: function(value) {
+
+        this._testString = value;
+        this.updateText();
+
+    }
+});
+
 
 Phaser.Text.fontPropertiesCache = {};
 
