@@ -2238,7 +2238,7 @@ declare module Phaser {
         pointerY(pointerId?: number): number;
         reset(): void;
         setDragLock(allowHorizontal?: boolean, allowVertical?: boolean): void;
-        start(priority: number, useHandCursor: boolean): Phaser.Sprite;
+        start(priority?: number, useHandCursor?: boolean): Phaser.Sprite;
         startDrag(pointer: Phaser.Pointer): void;
         stop(): void;
         stopDrag(pointer: Phaser.Pointer): void;
@@ -2939,6 +2939,7 @@ declare module Phaser {
 
                 constructor(game: Phaser.Game, x?: number, y?: number, maxParticles?: number);
 
+                area: Phaser.Rectangle;
                 alphaData: any[];
                 autoAlpha: boolean;
                 autoScale: boolean;

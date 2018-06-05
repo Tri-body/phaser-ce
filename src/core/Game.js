@@ -70,7 +70,8 @@
 * @param {boolean} [antialias=true] - Draw all image textures anti-aliased or not. The default is for smooth textures, but disable if your game features pixel art.
 * @param {object} [physicsConfig=null] - A physics configuration object to pass to the Physics world on creation.
 */
-Phaser.Game = function (width, height, renderer, parent, state, transparent, antialias, physicsConfig) {
+Phaser.Game = function (width, height, renderer, parent, state, transparent, antialias, physicsConfig)
+{
 
     /**
     * @property {number} id - Phaser Game ID
@@ -513,7 +514,7 @@ Phaser.Game = function (width, height, renderer, parent, state, transparent, ant
             this.antialias = antialias;
         }
 
-        this.rnd = new Phaser.RandomDataGenerator([(Date.now() * Math.random()).toString()]);
+        this.rnd = new Phaser.RandomDataGenerator([ (Date.now() * Math.random()).toString() ]);
 
         this.state = new Phaser.StateManager(this, state);
     }
@@ -572,7 +573,8 @@ Phaser.Game.prototype = {
     * @method Phaser.Game#parseConfig
     * @protected
     */
-    parseConfig: function (config) {
+    parseConfig: function (config)
+    {
 
         this.config = config;
 
@@ -636,7 +638,7 @@ Phaser.Game.prototype = {
             this.physicsConfig = config['physicsConfig'];
         }
 
-        var seed = [(Date.now() * Math.random()).toString()];
+        var seed = [ (Date.now() * Math.random()).toString() ];
 
         if (config['seed'])
         {
@@ -662,7 +664,8 @@ Phaser.Game.prototype = {
     * @method Phaser.Game#boot
     * @protected
     */
-    boot: function () {
+    boot: function ()
+    {
 
         if (this.isBooted)
         {
@@ -752,7 +755,8 @@ Phaser.Game.prototype = {
         }
         else
         {
-            this.cache.onReady.addOnce(function () {
+            this.cache.onReady.addOnce(function ()
+            {
                 this.raf.start();
             }, this);
         }
@@ -765,7 +769,8 @@ Phaser.Game.prototype = {
     * @method Phaser.Game#showDebugHeader
     * @protected
     */
-    showDebugHeader: function () {
+    showDebugHeader: function ()
+    {
 
         if (window['PhaserGlobal'] && window['PhaserGlobal'].hideBanner)
         {
@@ -832,7 +837,8 @@ Phaser.Game.prototype = {
     * @method Phaser.Game#setUpRenderer
     * @protected
     */
-    setUpRenderer: function () {
+    setUpRenderer: function ()
+    {
 
         if (!this.device.canvas)
         {
@@ -938,7 +944,8 @@ Phaser.Game.prototype = {
     * @private
     * @param {Event} event - The webglcontextlost event.
     */
-    contextLost: function (event) {
+    contextLost: function (event)
+    {
 
         event.preventDefault();
 
@@ -952,7 +959,8 @@ Phaser.Game.prototype = {
     * @method Phaser.Game#contextRestored
     * @private
     */
-    contextRestored: function () {
+    contextRestored: function ()
+    {
 
         this.renderer.initContext();
 
@@ -969,7 +977,8 @@ Phaser.Game.prototype = {
     * @protected
     * @param {number} time - The current time as provided by RequestAnimationFrame.
     */
-    update: function (time) {
+    update: function (time)
+    {
 
         if (this.pendingDestroy)
         {
@@ -1093,7 +1102,8 @@ Phaser.Game.prototype = {
     * @protected
     * @param {number} timeStep - The current timeStep value as determined by Game.update.
     */
-    updateLogic: function (timeStep) {
+    updateLogic: function (timeStep)
+    {
 
         if (!this._paused && !this.pendingStep)
         {
@@ -1151,7 +1161,8 @@ Phaser.Game.prototype = {
     * @protected
     * @param {number} elapsedTime - The time elapsed since the last update.
     */
-    updateRender: function (elapsedTime) {
+    updateRender: function (elapsedTime)
+    {
 
         if (this.lockRender)
         {
@@ -1181,7 +1192,8 @@ Phaser.Game.prototype = {
     *
     * @method Phaser.Game#enableStep
     */
-    enableStep: function () {
+    enableStep: function ()
+    {
 
         this.stepping = true;
         this.pendingStep = false;
@@ -1194,7 +1206,8 @@ Phaser.Game.prototype = {
     *
     * @method Phaser.Game#disableStep
     */
-    disableStep: function () {
+    disableStep: function ()
+    {
 
         this.stepping = false;
         this.pendingStep = false;
@@ -1207,7 +1220,8 @@ Phaser.Game.prototype = {
     *
     * @method Phaser.Game#step
     */
-    step: function () {
+    step: function ()
+    {
 
         this.pendingStep = false;
         this.stepCount++;
@@ -1226,7 +1240,8 @@ Phaser.Game.prototype = {
     *
     * @method Phaser.Game#destroy
     */
-    destroy: function () {
+    destroy: function ()
+    {
 
         this.raf.stop();
 
@@ -1276,7 +1291,8 @@ Phaser.Game.prototype = {
     * @param {object} event - The DOM event that caused the game to pause, if any.
     * @protected
     */
-    gamePaused: function (event) {
+    gamePaused: function (event)
+    {
 
         //   If the game is already paused it was done via game code, so don't re-pause it
         if (!this._paused)
@@ -1308,7 +1324,8 @@ Phaser.Game.prototype = {
     * @param {object} event - The DOM event that caused the game to pause, if any.
     * @protected
     */
-    gameResumed: function (event) {
+    gameResumed: function (event)
+    {
 
         //  Game is paused, but wasn't paused via code, so resume it
         if (this._paused && !this._codePaused)
@@ -1342,7 +1359,8 @@ Phaser.Game.prototype = {
     * @param {object} event - The DOM event that caused the game to pause, if any.
     * @protected
     */
-    focusLoss: function (event) {
+    focusLoss: function (event)
+    {
 
         this.onBlur.dispatch(event);
 
@@ -1360,7 +1378,8 @@ Phaser.Game.prototype = {
     * @param {object} event - The DOM event that caused the game to pause, if any.
     * @protected
     */
-    focusGain: function (event) {
+    focusGain: function (event)
+    {
 
         this.onFocus.dispatch(event);
 
@@ -1381,13 +1400,15 @@ Phaser.Game.prototype.constructor = Phaser.Game;
 * @name Phaser.Game#paused
 * @property {boolean} paused - Gets and sets the paused state of the Game.
 */
-Object.defineProperty(Phaser.Game.prototype, "paused", {
+Object.defineProperty(Phaser.Game.prototype, 'paused', {
 
-    get: function () {
+    get: function ()
+    {
         return this._paused;
     },
 
-    set: function (value) {
+    set: function (value)
+    {
 
         if (value === true)
         {

@@ -7,14 +7,14 @@
 /**
 * @namespace Phaser
 */
-var Phaser = Phaser || {    // jshint ignore:line
+var Phaser = Phaser || { // jshint ignore:line
 
     /**
     * The Phaser version number.
     * @constant Phaser.VERSION
     * @type {string}
     */
-    VERSION: '2.10.4',
+    VERSION: '2.10.6',
 
     /**
     * An array of Phaser game instances.

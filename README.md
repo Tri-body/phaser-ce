@@ -8,14 +8,14 @@ Thousands of developers worldwide use Phaser. From indies and multi-national dig
 
 Phaser v2 was built and maintained by [Photon Storm](http://www.photonstorm.com) and turned over to the community (as Phaser CE) in November 2016. [Phaser v3](http://phaser.io/phaser3) is in active development.
 
-The [current Phaser CE release is 2.10.4](https://github.com/photonstorm/phaser-ce/releases/tag/v2.10.4).
+The [current Phaser CE release is 2.10.6](https://github.com/photonstorm/phaser-ce/releases/tag/v2.10.6).
 
 - **Visit:** The [Phaser website](http://phaser.io) and follow on [Twitter](https://twitter.com/photonstorm) (#[phaserjs](https://twitter.com/hashtag/phaserjs))
 - **Learn:** [API Docs](https://photonstorm.github.io/phaser-ce/), [Support Forum][forum] and [StackOverflow](https://stackoverflow.com/questions/tagged/phaser-framework)
 - **Code:** 700+ [Examples](http://phaser.io/examples) ([source][examples]), new [Phaser CE examples](https://codepen.io/collection/AMbZgY/)
 - **Read:** Weekly [Phaser World](#newsletter) Newsletter
 - **Chat:** [Slack](http://phaser.io/community/slack) and [Discord](http://phaser.io/community/discord)
-- **Extend:** Phaser plugins – [Shop](http://phaser.io/shop/plugins), [GitHub](https://github.com/search?q=topic%3Aphaser-plugin&type=Repositories "Phaser plugins on GitHub"), [NPM](https://www.npmjs.com/browse/keyword/phaser-plugin "Phaser plugins on NPM")
+- **Extend:** Phaser plugins - [Shop](http://phaser.io/shop/plugins), [GitHub](https://github.com/search?q=topic%3Aphaser-plugin&type=Repositories "Phaser plugins on GitHub"), [NPM](https://www.npmjs.com/browse/keyword/phaser-plugin "Phaser plugins on NPM")
 - **Be awesome:** [Support](#support) the future of Phaser
 
 Grab the source and join in the fun!
@@ -128,16 +128,16 @@ Please see additional steps for [Browserify/CommonJS](#browserify) and [Webpack]
 [Phaser CE is on jsDelivr](http://www.jsdelivr.com/projects/phaser-ce), a "super-fast CDN for developers". Include the following in your html:
 
 ```html
-<script src="//cdn.jsdelivr.net/npm/phaser-ce@2.10.4/build/phaser.js"></script>
+<script src="//cdn.jsdelivr.net/npm/phaser-ce@2.10.6/build/phaser.js"></script>
 ```
 
 or the minified version:
 
 ```html
-<script src="//cdn.jsdelivr.net/npm/phaser-ce@2.10.4"></script>
+<script src="//cdn.jsdelivr.net/npm/phaser-ce@2.10.6"></script>
 ```
 
-[Custom builds](https://cdn.jsdelivr.net/npm/phaser-ce@2.10.4/build/custom/) are available too.
+[Custom builds](https://cdn.jsdelivr.net/npm/phaser-ce@2.10.6/build/custom/) are available too.
 
 <a name="getting-started"></a>
 
@@ -283,9 +283,9 @@ Releases of new versions of Phaser CE are under the communities control. If you 
 
 2. Make sure that you have added details of the new version to the `README.md` and `CHANGELOG.md`. This should include a summary of changes made in the version. You can usually obtain this from the commit / PR history. It's nice to credit who made the changes by linking to their GitHub user ID, but isn't a requirement.
 
-3. From the root repo folder, run `grunt jshint` and make sure there are no jshint errors. If there are, please fix them, or request that the original author of the code does so.
+3. From the root repo folder, run `grunt eslint` and make sure there are no errors. If there are, please fix them, or request that the original author of the code does so.
 
-4. Once jshint passes run `grunt release`, sit back, and wait. It will build all of the versions of Phaser required, update the doc files, TypeScript defs and lots more. When finished, commit all of the new files and make sure to include a clear message in your commit saying you want this release pushed to npm. Be sure to tag me when doing this, i.e. 'Phaser CE Version 2.X.X. Please publish to npm @photonstorm' - I'll see it, and then publish as soon as I can (often the same day).
+4. Once ESLint passes run `grunt release`, sit back, and wait. It will build all of the versions of Phaser required, update the doc files, TypeScript defs and lots more. When finished, commit all of the new files and make sure to include a clear message in your commit saying you want this release pushed to npm. Be sure to tag me when doing this, i.e. 'Phaser CE Version 2.X.X. Please publish to npm @photonstorm' - I'll see it, and then publish as soon as I can (often the same day).
 
 <a name="support"></a>
 
@@ -319,7 +319,7 @@ Previous editions can found on our [Back Issues](http://phaser.io/community/back
 The [Contributors Guide][contribute] contains full details on how to help with Phaser development. The main points are:
 
 - Found a bug? Report it on [GitHub Issues][issues] and include a code sample.
-- Before submitting a Pull Request run your code through [JSHint](http://www.jshint.com/) using our [config](https://github.com/photonstorm/phaser-ce/blob/master/.jshintrc).
+- Before submitting a Pull Request run `npm run test` and fix any errors.
 - Before contributing read the [code of conduct](https://github.com/photonstorm/phaser-ce/blob/master/CODE_OF_CONDUCT.md).
 
 Written something cool in Phaser? Please tell us about it in the [forum][forum], or email support@phaser.io
@@ -328,42 +328,14 @@ Written something cool in Phaser? Please tell us about it in the [forum][forum],
 
 # Change Log
 
-## Version 2.10.4 - 3rd May 2018
+## Version 2.10.6 - 1st June 2018
 
-### New Features
-
-* Phaser.Text#testString is the character string used to calculate the text's width and height.
-* Ellipse#centerX
-* Ellipse#centerY
-
-### Updates
-
-* Callbacks added with Phaser.Input#addMoveCallback receive an `event` parameter.
-
-### Bug Fixes
-
-* Fixed a bogus warning when selecting tilemap layer 0 (#511).
-* Fixed wrong position in Ellipse#random (#522).
-* Fixed an Animation skipping the final frame in low-FPS situations (#524).
-* Fixed wrong ellipse position in Debug#geom (#526).
-* Fixed `forceType` failing to override some geometry types in Debug#geom.
-* Fixed unnecessary text updates when using Text#setText with `immediate=true` (#525).
-* Fixed issues restarting a Sound in Firefox (#530).
-* Fixed an IndexSizeError in Edge/Firefox when a very small texture crop rectangle is used (#532).
-
-### TypeScript definitions
-
-* Corrected definitions for ContactMaterial#frictionStiffness, Convex (#513).
-
-### Documentation
-
-* Fixed typos (#517, #521).
-* The Tilemap methods fill, random, replace, shuffle, and swap modify the tile index only (#484).
-* The special GameConfig.transparent value 'notMultiplied' disables the WebGL context attribute `premultipliedAlpha`.
+* Fixed audio playback when restarting a paused sound (#538).
+* TypeScript and documentation fixes (#537, #540, #544, #545).
 
 ### Thanks
 
-@budda, @Hagisus, @HaoboZ, @hardylr, @intersrc, @jamesjsewell, @josalmi, @joshlory, @melissaelopez, @mickeyren, @photonstorm, @samme, @tobspr
+@bseiller, @GrindheadGames, @josalmi, @photonstorm, @qdrj, @samme, @Siri0n, @zhanghuanchong
 
 For changes in previous releases please see the extensive [Change Log](https://github.com/photonstorm/phaser-ce/blob/master/CHANGELOG.md).
 
@@ -387,10 +359,10 @@ All rights reserved.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-44006568-2/phaser/index)](https://github.com/igrigorik/ga-beacon)
 
-[get-js]: https://github.com/photonstorm/phaser-ce/releases/download/v2.10.4/phaser.js
-[get-minjs]: https://github.com/photonstorm/phaser-ce/releases/download/v2.10.4/phaser.min.js
-[get-zip]: https://github.com/photonstorm/phaser-ce/archive/v2.10.4.zip
-[get-tgz]: https://github.com/photonstorm/phaser-ce/archive/v2.10.4.tar.gz
+[get-js]: https://github.com/photonstorm/phaser-ce/releases/download/v2.10.6/phaser.js
+[get-minjs]: https://github.com/photonstorm/phaser-ce/releases/download/v2.10.6/phaser.min.js
+[get-zip]: https://github.com/photonstorm/phaser-ce/archive/v2.10.6.zip
+[get-tgz]: https://github.com/photonstorm/phaser-ce/archive/v2.10.6.tar.gz
 [clone-http]: https://github.com/photonstorm/phaser.git
 [clone-ssh]: ssh://git@github.com:photonstorm/phaser.git
 [clone-svn]: https://github.com/photonstorm/phaser
