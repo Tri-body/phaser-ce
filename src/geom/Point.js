@@ -1124,12 +1124,12 @@ Phaser.Point.parse = function (obj, xProp, yProp)
 
     if (obj[xProp])
     {
-        point.x = parseInt(obj[xProp], 10);
+        point.x = parseFloat(obj[xProp], 10);
     }
 
     if (obj[yProp])
     {
-        point.y = parseInt(obj[yProp], 10);
+        point.y = parseFloat(obj[yProp], 10);
     }
 
     return point;
@@ -1137,10 +1137,27 @@ Phaser.Point.parse = function (obj, xProp, yProp)
 };
 
 /**
+* Truncates the x and y values, removing any fractional parts.
+*
+* @method Phaser.Point.trunc
+* @static
+* @param {object} obj - The Point.
+* @return {object} The modified Point.
+*/
+Phaser.Point.trunc = function (obj)
+{
+    obj.x = Phaser.Math.trunc(obj.x);
+    obj.y = Phaser.Math.trunc(obj.y);
+
+    return obj;
+};
+
+/**
  * Tests a Point or Point-like object.
  *
  * @method Phaser.Point.isPoint
  * @static
+ * @param {object} obj - The object to test.
  * @return {boolean} - True if the object has numeric x and y properties.
  */
 Phaser.Point.isPoint = function (obj)

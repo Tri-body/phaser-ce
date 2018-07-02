@@ -1092,58 +1092,25 @@ Phaser.Sound.prototype = {
     _createSourceAndConnect: function ()
     {
 
-        if (this._sound && !this.allowMultiple)
-        {
-            console.warn('Phaser.Sound: Audio source already exists');
-
-            // this._disconnectSource();
-        }
-
         this._sound = this.context.createBufferSource();
-
-        this._sourceId++;
-
-        if (this.externalNode)
-        {
-            this._sound.connect(this.externalNode);
-        }
-        else
-        {
-            this._sound.connect(this.gainNode);
-        }
-
+        this._sound.connect(this.externalNode || this.gainNode);
         this._buffer = this.game.cache.getSoundData(this.key);
         this._sound.buffer = this._buffer;
+        this._sourceId++;
 
     },
 
     _disconnectSource: function ()
     {
 
-        if (this.externalNode)
-        {
-            this._sound.disconnect(this.externalNode);
-        }
-        else if (this.gainNode)
-        {
-            this._sound.disconnect(this.gainNode);
-        }
+        this._sound.disconnect(this.externalNode || this.gainNode);
 
     },
 
     _startSource: function (when, offset, duration)
     {
 
-        if (!when) { when = 0; }
-
-        if (this._sound.start === undefined)
-        {
-            this._sound.noteGrainOn(when, offset, duration);
-        }
-        else
-        {
-            this._sound.start(when, offset, duration);
-        }
+        this._sound.start(when || 0, offset, duration);
 
     },
 
@@ -1153,20 +1120,13 @@ Phaser.Sound.prototype = {
         // Firefox calls onended() after _sound.stop(). Chrome and Safari do not. (#530)
         this._removeOnEndedHandler();
 
-        if (this._sound.stop === undefined)
+        try
         {
-            this._sound.noteOff(0);
+            this._sound.stop(0);
         }
-        else
+        catch (e)
         {
-            try
-            {
-                this._sound.stop(0);
-            }
-            catch (e)
-            {
-                //  Thanks Android 4.4
-            }
+            //  Thanks Android 4.4
         }
 
         this._disconnectSource();

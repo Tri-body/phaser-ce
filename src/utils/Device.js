@@ -609,7 +609,7 @@ Phaser.Device.whenReady = function (callback, context, nonPrimer)
         readyCheck._queue.push([ callback, context ]);
 
         var cordova = typeof window.cordova !== 'undefined';
-        var cocoonJS = navigator['isCocoonJS'];
+        var cocoonJS = navigator.isCocoonJS;
 
         if (document.readyState === 'complete' || document.readyState === 'interactive')
         {
@@ -810,7 +810,7 @@ Phaser.Device._initialize = function ()
     function _checkFeatures ()
     {
 
-        device.canvas = !!window['CanvasRenderingContext2D'] || device.cocoonJS;
+        device.canvas = !!window.CanvasRenderingContext2D || device.cocoonJS;
 
         try
         {
@@ -821,14 +821,26 @@ Phaser.Device._initialize = function ()
             device.localStorage = false;
         }
 
-        device.file = !!window['File'] && !!window['FileReader'] && !!window['FileList'] && !!window['Blob'];
-        device.fileSystem = !!window['requestFileSystem'];
+        device.file = !!window.File && !!window.FileReader && !!window.FileList && !!window.Blob;
+        device.fileSystem = !!window.requestFileSystem;
 
         device.webGL = !!window.WebGLRenderingContext;
 
-        device.worker = !!window['Worker'];
+        device.worker = !!window.Worker;
 
-        device.pointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+        device.pointerLockElement = (('pointerLockElement' in document) && 'pointerLockElement') ||
+            (('mozPointerLockElement' in document) && 'mozPointerLockElement') ||
+            (('webkitPointerLockElement' in document) && 'webkitPointerLockElement');
+
+        device.pointerlockchange = (('onpointerlockchange' in document) && 'pointerlockchange') ||
+            (('onmozpointerlockchange' in document) && 'mozpointerlockchange') ||
+            (('onwebkitpointerlockchange' in document) && 'webkitpointerlockchange');
+
+        device.pointerlockerror = (('onpointerlockerror' in document) && 'pointerlockerror') ||
+            (('onmozpointerlockerror' in document) && 'mozpointerlockerror') ||
+            (('onwebkitpointerlockerror' in document) && 'webkitpointerlockerror');
+
+        device.pointerLock = !!device.pointerLockElement;
 
         device.quirksMode = (document.compatMode === 'CSS1Compat') ? false : true;
 
@@ -952,7 +964,7 @@ Phaser.Device._initialize = function ()
         }
 
         //  Keyboard Input?
-        if (window['Element'] && Element['ALLOW_KEYBOARD_INPUT'])
+        if (window.Element && Element.ALLOW_KEYBOARD_INPUT)
         {
             device.fullscreenKeyboard = true;
         }
@@ -1030,7 +1042,7 @@ Phaser.Device._initialize = function ()
         }
 
         //  WebApp mode in iOS
-        if (navigator['standalone'])
+        if (navigator.standalone)
         {
             device.webApp = true;
         }
@@ -1052,7 +1064,7 @@ Phaser.Device._initialize = function ()
             device.electron = !!process.versions.electron;
         }
 
-        if (navigator['isCocoonJS'])
+        if (navigator.isCocoonJS)
         {
             device.cocoonJS = true;
         }
@@ -1088,11 +1100,10 @@ Phaser.Device._initialize = function ()
     {
 
         var videoElement = document.createElement('video');
-        var result = false;
 
         try
         {
-            if (result = !!videoElement.canPlayType)
+            if (videoElement.canPlayType)
             {
                 if (videoElement.canPlayType('video/ogg; codecs="theora"').replace(/^no$/, ''))
                 {
@@ -1122,7 +1133,7 @@ Phaser.Device._initialize = function ()
                 }
             }
         }
-        catch (e) {}
+        catch (e) {} // eslint-disable-line no-empty
     }
 
     /**
@@ -1131,14 +1142,13 @@ Phaser.Device._initialize = function ()
     function _checkAudio ()
     {
 
-        device.audioData = !!(window['Audio']);
-        device.webAudio = !!(window['AudioContext'] || window['webkitAudioContext']);
+        device.audioData = !!(window.Audio);
+        device.webAudio = !!(window.AudioContext || window.webkitAudioContext);
         var audioElement = document.createElement('audio');
-        var result = false;
 
         try
         {
-            if (result = !!audioElement.canPlayType)
+            if (audioElement.canPlayType)
             {
                 if (audioElement.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ''))
                 {
@@ -1196,8 +1206,7 @@ Phaser.Device._initialize = function ()
             }
         }
         catch (e)
-        {
-        }
+        {} // eslint-disable-line no-empty
 
     }
 
@@ -1270,7 +1279,7 @@ Phaser.Device._initialize = function ()
     function _checkDevice ()
     {
 
-        device.pixelRatio = window['devicePixelRatio'] || 1;
+        device.pixelRatio = window.devicePixelRatio || 1;
         device.iPhone = navigator.userAgent.toLowerCase().indexOf('iphone') !== -1;
         device.iPhone4 = (device.pixelRatio === 2 && device.iPhone);
         device.iPad = navigator.userAgent.toLowerCase().indexOf('ipad') !== -1;

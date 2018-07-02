@@ -480,6 +480,26 @@ Phaser.Math = {
     },
 
     /**
+    * Truncates a number, removing any fractional part.
+    * Same as round-towards-zero.
+    *
+    * @method Phaser.Math#trunc
+    * @param {number} value - The value to truncate.
+    * @return {number} The truncated value.
+    */
+    trunc: function (value)
+    {
+
+        if (!isFinite(value))
+        {
+            return value;
+        }
+
+        return (value - value % 1) || (value < 0 ? -0 : value === 0 ? value : 0);
+
+    },
+
+    /**
     * Rotates currentAngle towards targetAngle, taking the shortest rotation distance.
     * The lerp argument is the amount to rotate by in this call.
     * 
@@ -921,7 +941,7 @@ Phaser.Math = {
     *
     * @method Phaser.Math#linearInterpolation
     * @param {Array} v - The input array of values to interpolate between.
-    * @param {number} k - The percentage of interpolation, between 0 and 1.
+    * @param {number} k - The amount of interpolation, between 0 (start) and 1 (end).
     * @return {number} The interpolated value
     */
     linearInterpolation: function (v, k)

@@ -3,6 +3,18 @@
 * @license      {@link https://github.com/photonstorm/phaser/blob/master/license.txt|MIT License}
 */
 
+if (typeof AudioBufferSourceNode !== 'undefined')
+{
+    if (!AudioBufferSourceNode.prototype.start)
+    {
+        AudioBufferSourceNode.prototype.start = AudioBufferSourceNode.prototype.noteGrainOn;
+    }
+    if (!AudioBufferSourceNode.prototype.stop)
+    {
+        AudioBufferSourceNode.prototype.stop = AudioBufferSourceNode.prototype.noteOff;
+    }
+}
+
 // ES6 Math.trunc - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
 if (!Math.trunc)
 {
@@ -172,11 +184,9 @@ if (!window.console)
 
 if (!Object.assign)
 {
-    /* jshint -W098 */
     // We include `varArgs` (unused) to ensure Object.assign.length === 2
-    Object.assign = function (target, varArgs)
+    Object.assign = function (target, varArgs) // eslint-disable-line no-unused-vars
     {
-    /* jshint +W098 */
         'use strict';
         if (target == null)
         { // TypeError if undefined or null
